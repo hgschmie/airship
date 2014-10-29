@@ -89,7 +89,11 @@ public class Airship
     private static final int EXIT_PERMANENT = 100;
 //    private static final int EXIT_TRANSIENT = 111;
 
-    private static final File CONFIG_FILE = new File(System.getProperty("user.home", "."), ".airshipconfig");
+    private static final File [] CONFIG_FILES = new File [] {
+        new File(System.getProperty("user.home", "."), ".airshipconfig"),
+        new File("/usr/local/etc/airship/airshipconfig.properties"),
+        new File("/etc/airship/airshipconfig.properties")
+    };
 
     public static final Cli<AirshipCommand> AIRSHIP_PARSER;
 
@@ -173,7 +177,16 @@ public class Airship
         {
             initializeLogging(globalOptions.debug);
 
-            config = Config.loadConfig(CONFIG_FILE);
+            File configFile = CONFIG_FILES[0];
+
+            for (File file : CONFIG_FILES) {
+                if (file.exists()) {
+                    configFile = file;
+                    break;
+                }
+            }
+
+            config = Config.loadConfig(configFile);
 
             try {
                 execute();

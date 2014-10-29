@@ -48,7 +48,12 @@ class Maven
     private static final String MAVEN_HOME = System.getProperty("maven.home", USER_DIR);
     private static final File MAVEN_USER_HOME = new File(USER_HOME, ".m2");
     private static final File DEFAULT_USER_SETTINGS_FILE = new File(MAVEN_USER_HOME, "settings.xml");
-    private static final File DEFAULT_GLOBAL_SETTINGS_FILE = new File(MAVEN_HOME, "conf/settings.xml");
+
+    private static final File [] DEFAULT_GLOBAL_SETTINGS_FILES = new File [] {
+        new File(MAVEN_HOME, "conf/settings.xml"),
+        new File("/usr/local/etc/airship/maven-settings.xml"),
+        new File("/etc/airship/maven-settings.xml")
+    };
 
     private final RepositorySystem repositorySystem;
     private final RepositorySystemSession session;
@@ -63,8 +68,16 @@ class Maven
         validateRepositoryMetadata(snapshotsRepositoryInfo, "snapshots");
         validateRepositoryMetadata(releasesRepositoryInfo, "releases");
 
+        File globalSettingsFile = DEFAULT_GLOBAL_SETTINGS_FILES[0];
+        for (File file : DEFAULT_GLOBAL_SETTINGS_FILES) {
+            if (file.exists()) {
+                globalSettingsFile = file;
+                break;
+            }
+        }
+
         final SettingsBuildingRequest request = new DefaultSettingsBuildingRequest()
-                .setGlobalSettingsFile(DEFAULT_GLOBAL_SETTINGS_FILE)
+                .setGlobalSettingsFile(globalSettingsFile)
                 .setUserSettingsFile(DEFAULT_USER_SETTINGS_FILE)
                 .setSystemProperties(System.getProperties());
 

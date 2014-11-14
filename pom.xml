@@ -10,7 +10,7 @@
 
     <groupId>io.airlift.airship</groupId>
     <artifactId>airship-root</artifactId>
-    <version>0.14-SNAPSHOT</version>
+    <version>0.14-GRPN-1</version>
     <packaging>pom</packaging>
     <name>airship-root</name>
 
@@ -48,7 +48,7 @@
     <scm>
         <connection>scm:git:git://github.com/airlift/airship.git</connection>
         <url>https://github.com/airlift/airship/tree/master</url>
-        <tag>HEAD</tag>
+        <tag>0.14-GRPN-1</tag>
     </scm>
 
     <distributionManagement>

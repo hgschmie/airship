@@ -51,6 +51,19 @@
         <tag>HEAD</tag>
     </scm>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Groupon Snapshots Repository</name>
+            <url>http://nexus-dev/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>releases</id>
+            <name>Groupon Releases Repository</name>
+            <url>http://nexus-dev/content/repositories/releases</url>
+        </repository>
+    </distributionManagement>
+
     <properties>
         <air.check.skip-extended>true</air.check.skip-extended>
 

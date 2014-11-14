@@ -1,7 +1,6 @@
 package io.airlift.airship.configbundler;
 
 import com.google.common.io.ByteSource;
-import com.google.common.io.ByteStreams;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -35,7 +34,7 @@ class ZipPackager
             String path = entry.getKey();
             ZipEntry fileEntry = new ZipEntry(path);
             out.putNextEntry(fileEntry);
-            ByteStreams.copy(entry.getValue(), out);
+            entry.getValue().copyTo(out);
         }
         out.finish();
 
